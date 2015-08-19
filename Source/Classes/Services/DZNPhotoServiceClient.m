@@ -263,8 +263,12 @@
 - (void)searchPhotosWithKeyword:(NSString *)keyword page:(NSInteger)page resultPerPage:(NSInteger)resultPerPage completion:(DZNHTTPRequestCompletion)completion
 {
     NSString *path = photoSearchUrlPathForService(self.service);
-
-    NSDictionary *params = [self photosParamsWithKeyword:keyword page:page resultPerPage:resultPerPage];
+    
+    NSMutableDictionary *params = [[self photosParamsWithKeyword:keyword page:page resultPerPage:resultPerPage] mutableCopy];
+    
+    
+    [params setObject:@"cc_publicdomain" forKey:@"rights"];
+    
     [self getObject:[DZNPhotoMetadata class] path:path params:params completion:completion];
 }
 
